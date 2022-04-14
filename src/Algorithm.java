@@ -1,4 +1,4 @@
-package regul;
+package regul.src;
 
 import java.util.*;
 import java.util.regex.*;
