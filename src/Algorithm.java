@@ -45,7 +45,7 @@ public class Algorithm {
 	}
 
 	public String eval(String begin, int cnt) {
-		StringBuilder temp = new StringBuilder(begin);
+		StringBuffer temp = new StringBuffer(begin);
 
         for (int i = 0; i < cnt; i++) {
 			String current = temp.toString();
