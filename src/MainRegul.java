@@ -11,8 +11,15 @@ public class MainRegul {
         System.out.println("----------isIden-----------");
         String[] str1 = {"ab", "1aab", "c_ab"};
         String[] str2 = {" ab  8vb , kl  ", "a 2a *a_", ""};
-        for (int i = 0; i < str1.length; i++)
-            System.out.println("\"" + str1[i] + "\" => " + RegExprHome.isIden(str1[i]));
+
+        for (String s : str1)
+            System.out.println("\"" + s + "\" => " + RegExprHome.isIden(s));
+
+        Arrays.stream(str1).forEach(System.out::println);
+
+        for (int i = 0; i < str1.length; i++) {
+            String s = str1[i];
+        }
 
         System.out.println("---------cntIden--------");
         for (int i = 0; i < str2.length; i++)
