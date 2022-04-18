@@ -36,7 +36,8 @@ public class MainRegul {
 
         String[] desc = {"  a -> bc",
                 " ->. abc", "ca->ac ; cb -> bc; c->. abb; -> c ",
-                "a-> bc ; b->. c ; c->.; - > a"};
+                "a-> bc ; b->. c  c->.; - > a"
+        };
         String[][] data = {{"ai", "", "caia"}, {"", "ai", "caia"}, {"abc"}, {"ab"}};
 
         System.out.println("---------Algorithm--------");

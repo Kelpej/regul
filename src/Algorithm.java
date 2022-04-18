@@ -9,9 +9,7 @@ public class Algorithm {
     private static class Rule {
         public static final Pattern defaultRulePattern = Pattern.compile("[a-zA-Z0-9#]*\\s*->.?\\s*[a-zA-Z0-9#]*");
         public static final Pattern emptyRulePattern = Pattern.compile("[a-zA-Z0-9#]*\\s*->.?\\s*[a-zA-Z0-9#]*");
-        public static final Pattern ruleSplitter = Pattern.compile("\\s*->");
-        public static final Pattern isEnd = Pattern.compile("\\s*.\\s*[a-zA-Z0-9#]*");
-
+        public static final Pattern ruleSplitter = Pattern.compile("\\s*->.?\\s*");
 
         private final Pattern left;
         private final String right;
@@ -25,7 +23,7 @@ public class Algorithm {
 
         @Override
         public String toString() {
-            return "\"" + left + "\"" + " -> " + (end ? "." : "") + " \"" + right + "\"";
+            return "\"" + left + "\"" + " ->" + (end ? "." : "") + " \"" + right + "\"";
         }
     }
 
@@ -39,10 +37,10 @@ public class Algorithm {
                         return;
                     }
                     String[] parameters = rule.split(Rule.ruleSplitter.pattern());
-                    Pattern left = Pattern.compile(parameters[0].strip());
-                    String right = parameters[1].replace(" ", "");
-                    boolean end = right.matches(Rule.isEnd.pattern());
-                    base.add(new Rule(left, end ? right.substring(1) : right, end));
+                    Pattern left = Pattern.compile(parameters[0]);
+                    String right = parameters[1];
+                    boolean end = rule.contains(".");
+                    base.add(new Rule(left, right, end));
                 });
     }
 
@@ -67,6 +65,8 @@ public class Algorithm {
 
                 if (currentRule.get().end)
                     return temp.toString();
+            } else {
+                return temp.toString();
             }
         }
         return "undefined";
