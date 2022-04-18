@@ -24,7 +24,7 @@ class RegExprHomeTest {
         String[] input = {"ab", "1aab", "c_ab"};
         Boolean[] expected = {true, false, true};
         Boolean[] output = Arrays.stream(input)
-                .map(s -> (boolean) RegExprHome.isIden(s)).toList()
+                .map(RegExprHome::isIden)
                 .toArray(Boolean[]::new);
 
         assertArrayEquals(expected, output);
@@ -32,13 +32,13 @@ class RegExprHomeTest {
 
     @org.junit.jupiter.api.Test
     void cntIden() {
-        String[] input = {" ab  8vb , kl  ", "a 2a *a_", ""};
+        String[] input = {" ab  8vb , kl  ", "a 2a *a_", "", "klds dsa8sj,    21sas  _opel"};
         Integer[] output = Arrays.stream(input)
                 .mapToInt(RegExprHome::cntIden)
-                .boxed().toList()
+                .boxed()
                 .toArray(Integer[]::new);
 
-        assertArrayEquals(new Integer[]{2, 1, 0}, output);
+        assertArrayEquals(new Integer[]{3, 3, 0, 4}, output);
     }
 
     @org.junit.jupiter.api.Test
@@ -46,10 +46,10 @@ class RegExprHomeTest {
         String[] input = {" ab  8vb , kl, kl  ", "a 2a *a_, 2a, b", ""};
         Integer[] output = Arrays.stream(input)
                 .mapToInt(RegExprHome::distIden)
-                .boxed().toList()
+                .boxed()
                 .toArray(Integer[]::new);
 
-        assertArrayEquals(new Integer[]{2, 2, 0}, output);
+        assertArrayEquals(new Integer[]{3, 2, 0}, output);
     }
 
     @org.junit.jupiter.api.Test

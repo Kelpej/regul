@@ -1,14 +1,14 @@
 package regul.src;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
-import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class RegExprHome {
     private static final Pattern splitter = Pattern.compile("[, ]+");
+    private static final Pattern idenPattern = Pattern.compile("[a-zA-Z][a-zA-Z\\d_]*");
 
     public static boolean onlyOdd(String word) {
         if (Pattern.compile("[ab]+").matcher(word).matches())
@@ -26,33 +26,34 @@ public class RegExprHome {
     }
 
     public static boolean isIden(String id) {
-        return Pattern.compile("[a-zA-Z]([a-zA-Z\\d_])*").matcher(id).matches();
+        return idenPattern.matcher(id).matches();
     }
 
     public static int cntIden(String str) {
         return (int) Arrays.stream(str.strip().split(splitter.pattern()))
-                .filter(RegExprHome::isIden)
+                .filter(s -> idenPattern.matcher(s).find())
                 .count();
     }
 
     public static int distIden(String str) {
-        Set<String> stringSet = Arrays.stream(str.strip().split(splitter.pattern()))
-                .filter(RegExprHome::isIden)
-                .collect(Collectors.toSet());
-
-        return stringSet.size();
+        return Arrays.stream(str.strip().split(splitter.pattern()))
+                .filter(s -> idenPattern.matcher(s).find())
+                .map(s -> {
+                    Matcher idenMatcher = idenPattern.matcher(s);
+                    return idenMatcher.results()
+                            .findFirst().get().group(idenMatcher.groupCount());
+                })
+                .collect(Collectors.toSet())
+                .size();
     }
 
     public static Double sumDouble(String str) {
         String[] numbers = str.strip().toUpperCase(Locale.ROOT).split(splitter.pattern());
         try {
-            List<Double> parsed = Arrays.stream(numbers)
+            return Arrays.stream(numbers)
                     .mapToDouble(Double::parseDouble)
                     .boxed()
-                    .toList();
-            return parsed
-                    .stream()
-                    .mapToDouble(number -> number)
+                    .mapToDouble(num -> num)
                     .sum();
         } catch (NumberFormatException nfe) {
             return null;
