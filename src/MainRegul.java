@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public class MainRegul {
     public static void main(String[] args) {
+        System.out.println(RegExprHome.distIden(" ab  8vb , kl, kl  "));
         System.out.println("----------onlyOdd-----------");
         String[] str = {"ab", "aab", "abbaabbabaaa", "aaacbbbbb"};
         Arrays.stream(str).forEach(s -> System.out.println("\"" + s + "\" => " + RegExprHome.onlyOdd(s)));
@@ -51,5 +52,4 @@ public class MainRegul {
             }
         }
     }
-
 }
